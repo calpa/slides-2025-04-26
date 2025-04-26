@@ -12,19 +12,24 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 const { currentPage } = useNav()
 
-const qrcodeBase = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&bgcolor=e2e8f0`
+const bgColor = computed(() => currentPage.value === 1 ? 'e2e8f0' : 'ffffff')
 
-const links = [
+const qrcodeBase = computed(() => `https://api.qrserver.com/v1/create-qr-code/?size=150x150&bgcolor=${bgColor.value}`)
+
+const links = computed(() => {
+    return [
     {
         text: '互動筆記',
-        qrcodeImage: `${qrcodeBase}&data=https://pad.riseup.net/p/Wz657VgFwWQKEcIjhhT4`
+        qrcodeImage: `${qrcodeBase.value}&data=https://pad.riseup.net/p/Wz657VgFwWQKEcIjhhT4`
     },
     {
         text: '簡報',
-        qrcodeImage: `${qrcodeBase}&data=https://slides-bolt-new.calpa.me/`
+        qrcodeImage: `${qrcodeBase.value}&data=https://slides-bolt-new.calpa.me/`
     }
-]
+    ]
+})
 </script>
